@@ -12,7 +12,7 @@ type UserHandler struct {
 
 func (h *UserHandler) GetProfile(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
-	
+
 	user, err := h.Svc.GetProfile(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)

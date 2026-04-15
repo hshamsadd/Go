@@ -10,10 +10,10 @@ import (
 func Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		
+
 		// Process request
 		next.ServeHTTP(w, r)
-		
+
 		// Log results
 		log.Printf(
 			"%s %s %s %s",
