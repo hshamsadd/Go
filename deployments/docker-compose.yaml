@@ -1,0 +1,46 @@
+services:
+  # --- The Go Application ---
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-go-app
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgres://hyfuser:hyfpassword@db:5432/postgres?sslmode=disable
+      - APP_ENV=production
+      - PORT=8080
+    depends_on:
+      db:
+        condition: service_healthy # Wait for DB to be ready before starting app
+    networks:
+      - backend-network
+
+  # --- The Database ---
+  db:
+    image: postgres:latest
+    container_name: my-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=hyfuser
+      - POSTGRES_PASSWORD=hyfpassword
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hyfuser -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

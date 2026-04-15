@@ -10,3 +10,7 @@
 - docker run -p 8080:8080 \
   --env DATABASE_URL="postgres://hyfuser:hyfpassword@host.docker.internal:5432/postgres?sslmode=disable" \
   my-go-app:latest
+- docker-compose up --build -d
+  - --build: Re-runs your multi-stage Dockerfile (Frontend build -> Go build).
+  - -d: Runs in "detached" mode (background).
+- docker-compose logs -f app // To check logs:
