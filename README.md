@@ -1,6 +1,11 @@
 # Go
 - go mod init Go/my-go-app
 - go mod tidy
+- go get
+- go mod download
+- go run     -> for running when developing
+- go build   -> to generate a binary
+- module github.com/hshamsadd/Go/my-go-app
 - goimports -w .
 - go fmt ./...
 - git rm -r --cached .
